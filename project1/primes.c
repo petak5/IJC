@@ -1,16 +1,18 @@
 #include <stdio.h>
+#include <time.h>
 #include "bitset.h"
 #include "eratosthenes.h"
 
 int main(void)
 {
-    bitset_create(x, 50000000);
+	clock_t start = clock();
+
+    bitset_create(x, 500000000);
     
     Eratosthenes(x);
-    printf("%lu\n", x[1]);
 
     int counter = 0;
-    for (unsigned long i = 49999999; i > 1; i--)
+    for (unsigned long i = 499999999; i > 1; i--)
     {
         if (bitset_getbit(x, i) == 0)
         {
@@ -24,6 +26,7 @@ int main(void)
         }
     }
 
+	fprintf(stderr, "Time=%.3g\n", (double)(clock()-start)/CLOCKS_PER_SEC);
 
     return 0;
 }
