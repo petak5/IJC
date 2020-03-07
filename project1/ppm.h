@@ -1,3 +1,9 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "error.h"
+
+#define MAX_LIMIT (8000 * 8000 * 3)
+
 struct ppm {
 	unsigned xsize;
 	unsigned ysize;
