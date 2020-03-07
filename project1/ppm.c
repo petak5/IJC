@@ -10,19 +10,24 @@ struct ppm * ppm_read(const char * filename)
 	}
 
 	unsigned x, y;
-	fscanf(f, "P6 %u %u 255 ", &x, &y);
+	if ((fscanf(f, "P6 %u %u 255 ", &x, &y)) != 2)
+	{
+		fclose(f);
+		warning_msg("Invalid header format.\n");
+		return NULL;
+	}
 
 	if ((x == 0) || (y == 0))
 	{
 		fclose(f);
-		warning_msg("Invalid dimensions. Can not be 0\n");
+		warning_msg("Invalid dimensions. Can not be 0.\n");
 		return NULL;
 	}
 
 	if ((x * y) > MAX_LIMIT)
 	{
 		fclose(f);
-		warning_msg("Image dimensions of '%dx%d' are out of the limit of %d", x, y, MAX_LIMIT);
+		warning_msg("Image dimensions of '%dx%d' are out of the limit of %d.\n", x, y, MAX_LIMIT);
 		return NULL;
 	}
 

@@ -1,4 +1,6 @@
 #include "ppm.h"
+#include "bitset.h"
+#include "eratosthenes.h"
 
 int main(int argc, char *argv[])
 {
@@ -11,11 +13,16 @@ int main(int argc, char *argv[])
 
 	if (image == NULL)
 	{
-		printf("That's really sad :(\n");
-		return 1;
+		error_exit("Failed to open image.\n");
 	}
 
-	printf("The image dimensions are: %ux%u\n", image->xsize, image->ysize);
+	bitset_alloc(bs, image->xsize * image->ysize * 3);
+
+	Eratosthenes(bs);
+	
+	bitset_free(bs);
+
+	ppm_free(image);
 
 	return 0;
 }

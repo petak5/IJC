@@ -22,8 +22,8 @@ eratosthenes.o: eratosthenes.c bitset.h error.h
 error.o: error.c error.h
 	$(CC) $(CFLAGS) -c error.c -o error.o
 
-steg-decode: steg-decode.o ppm.o error.o
-	$(CC) $(CFLAGS) $(LDFLAGS) steg-decode.o ppm.o error.o -o steg-decode
+steg-decode: steg-decode.o ppm.o eratosthenes.o error.o
+	$(CC) $(CFLAGS) $(LDFLAGS) steg-decode.o ppm.o eratosthenes.o error.o -o steg-decode
 
 steg-decode.o: steg-decode.c ppm.h error.h
 	$(CC) $(CFLAGS) -c steg-decode.c -o steg-decode.o

@@ -21,15 +21,11 @@ typedef unsigned long bitset_index_t;
     static_assert(velikost > 0, "Velikost pole musi byt vacsia nez 0")
 
 #define bitset_alloc(jmeno_pole,velikost)\
-    bitset_t jmeno_pole = (bitset_t) malloc(is_units(velikost) * sizeof(unsigned long));\
-    jmeno_pole[0] = velikost;\
-    for (unsigned long i = 1; i < is_units(velikost); i++)\
-        jmeno_pole[i] = 0;\
-    static_assert(velikost > 0, "Velikost pole musi byt vacsia nez 0")
+		bitset_t jmeno_pole = (bitset_t) malloc(is_units(velikost) * sizeof(unsigned long));\
+		jmeno_pole[0] = velikost
 
 #define bitset_free(jmeno_pole)\
-    free(jmeno_pole)
-
+	free(jmeno_pole)
 
 #ifndef USE_INLINE
 
@@ -38,16 +34,16 @@ typedef unsigned long bitset_index_t;
         jmeno_pole[0]
 
     #define bitset_setbit(jmeno_pole,index,vyraz)\
-		((index + 1) > bitset_size(jmeno_pole))\
+		(((index + 1) > bitset_size(jmeno_pole))\
 			? (error_exit("bitset_setbit: Index %lu mimo rozsah 0..%lu",(unsigned long)index, (unsigned long)bitset_size(jmeno_pole) - 1), 0)\
 	        : ((vyraz)\
     	        ? (jmeno_pole[1 + index / (sizeof(unsigned long) * CHAR_BIT)] |= 1L << (index % (sizeof(unsigned long) * CHAR_BIT)))\
-        	    : (jmeno_pole[1 + index / (sizeof(unsigned long) * CHAR_BIT)] &= ~(1L << (index % (sizeof(unsigned long) * CHAR_BIT)))))
+        	    : (jmeno_pole[1 + index / (sizeof(unsigned long) * CHAR_BIT)] &= ~(1L << (index % (sizeof(unsigned long) * CHAR_BIT))))))
 
     #define bitset_getbit(jmeno_pole,index)\
-		((index + 1) > bitset_size(jmeno_pole))\
+		(((index + 1) > bitset_size(jmeno_pole))\
 			? (error_exit("bitset_getbit: Index %lu mimo rozsah 0..%lu",(unsigned long)index, (unsigned long)bitset_size(jmeno_pole) - 1), 0)\
-        	: ((jmeno_pole[1 + index / (sizeof(unsigned long) * CHAR_BIT)] & 1L << (index % (sizeof(unsigned long) * CHAR_BIT))) != 0)
+        	: ((jmeno_pole[1 + index / (sizeof(unsigned long) * CHAR_BIT)] & 1L << (index % (sizeof(unsigned long) * CHAR_BIT))) != 0))
 
 
 #else // USE_INLINE
