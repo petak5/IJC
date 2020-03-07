@@ -48,19 +48,19 @@ typedef unsigned long bitset_index_t;
 #else // USE_INLINE
 
 
-    inline unsigned long bitset_size(bitset_t jmeno_pole)
+    extern inline unsigned long bitset_size(bitset_t jmeno_pole)
     {
         return jmeno_pole[0];
     }
 
-    inline void bitset_setbit(bitset_t jmeno_pole, bitset_index_t index, int vyraz)
+    extern inline void bitset_setbit(bitset_t jmeno_pole, bitset_index_t index, int vyraz)
     {
         (vyraz) ?
             (jmeno_pole[1 + index / (sizeof(unsigned long) * CHAR_BIT)] |= 1L << (index % (sizeof(unsigned long) * CHAR_BIT))) :
             (jmeno_pole[1 + index / (sizeof(unsigned long) * CHAR_BIT)] &= ~(1L << (index % (sizeof(unsigned long) * CHAR_BIT))));
     }
 
-    inline int bitset_getbit(bitset_t jmeno_pole, bitset_index_t index)
+    extern inline int bitset_getbit(bitset_t jmeno_pole, bitset_index_t index)
     {
         return (jmeno_pole[1 + index / (sizeof(unsigned long) * CHAR_BIT)] &= 1L << (index % (sizeof(unsigned long) * CHAR_BIT))) != 0;
     }
