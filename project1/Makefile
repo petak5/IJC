@@ -2,6 +2,8 @@ CC=gcc
 CFLAGS=-std=c11 -pedantic -Wall -Wextra -O0
 LDFLAGS=-lm
 
+all: primes primes-i
+
 primes: primes.o eratosthenes.o error.o
 	$(CC) $(CFLAGS) $(LDFLAGS) primes.o eratosthenes.o error.o -o primes
 
@@ -19,6 +21,9 @@ eratosthenes.o: eratosthenes.c bitset.h error.h
 
 error.o: error.c error.h
 	$(CC) $(CFLAGS) -c error.c -o error.o
+
+ppm.o: ppm.c ppm.h
+	$(CC) $(CFLAGS) -c ppm.c -o ppm.o
 
 run: primes primes-i
 	./primes
