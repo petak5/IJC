@@ -5,6 +5,7 @@
 #include <limits.h>
 #include <assert.h>
 #include <stdlib.h>
+#include "error.h"
 
 #ifndef BITSET_H
 #define BITSET_H
@@ -37,12 +38,16 @@ typedef unsigned long bitset_index_t;
         jmeno_pole[0]
 
     #define bitset_setbit(jmeno_pole,index,vyraz)\
-        ((vyraz) ?\
-            (jmeno_pole[1 + index / (sizeof(unsigned long) * CHAR_BIT)] |= 1L << (index % (sizeof(unsigned long) * CHAR_BIT))) :\
-            (jmeno_pole[1 + index / (sizeof(unsigned long) * CHAR_BIT)] &= ~(1L << (index % (sizeof(unsigned long) * CHAR_BIT)))))
+		((index + 1) > bitset_size(jmeno_pole))\
+			? (error_exit("bitset_setbit: Index %lu mimo rozsah 0..%lu",(unsigned long)index, (unsigned long)bitset_size(jmeno_pole) - 1), 0)\
+	        : ((vyraz)\
+    	        ? (jmeno_pole[1 + index / (sizeof(unsigned long) * CHAR_BIT)] |= 1L << (index % (sizeof(unsigned long) * CHAR_BIT)))\
+        	    : (jmeno_pole[1 + index / (sizeof(unsigned long) * CHAR_BIT)] &= ~(1L << (index % (sizeof(unsigned long) * CHAR_BIT)))))
 
     #define bitset_getbit(jmeno_pole,index)\
-        ((jmeno_pole[1 + index / (sizeof(unsigned long) * CHAR_BIT)] & 1L << (index % (sizeof(unsigned long) * CHAR_BIT))) != 0)
+		((index + 1) > bitset_size(jmeno_pole))\
+			? (error_exit("bitset_getbit: Index %lu mimo rozsah 0..%lu",(unsigned long)index, (unsigned long)bitset_size(jmeno_pole) - 1), 0)\
+        	: ((jmeno_pole[1 + index / (sizeof(unsigned long) * CHAR_BIT)] & 1L << (index % (sizeof(unsigned long) * CHAR_BIT))) != 0)
 
 
 #else // USE_INLINE
@@ -55,14 +60,29 @@ typedef unsigned long bitset_index_t;
 
     extern inline void bitset_setbit(bitset_t jmeno_pole, bitset_index_t index, int vyraz)
     {
-        (vyraz) ?
-            (jmeno_pole[1 + index / (sizeof(unsigned long) * CHAR_BIT)] |= 1L << (index % (sizeof(unsigned long) * CHAR_BIT))) :
-            (jmeno_pole[1 + index / (sizeof(unsigned long) * CHAR_BIT)] &= ~(1L << (index % (sizeof(unsigned long) * CHAR_BIT))));
+		if ((index + 1) > bitset_size(jmeno_pole))
+		{
+			error_exit("bitset_setbit: Index %lu mimo rozsah 0..%lu",(unsigned long)index, (unsigned long)bitset_size(jmeno_pole) - 1);
+		}
+		else
+		{
+        	(vyraz)
+            	? (jmeno_pole[1 + index / (sizeof(unsigned long) * CHAR_BIT)] |= 1L << (index % (sizeof(unsigned long) * CHAR_BIT)))
+            	: (jmeno_pole[1 + index / (sizeof(unsigned long) * CHAR_BIT)] &= ~(1L << (index % (sizeof(unsigned long) * CHAR_BIT))));
+		}
     }
 
     extern inline int bitset_getbit(bitset_t jmeno_pole, bitset_index_t index)
     {
-        return (jmeno_pole[1 + index / (sizeof(unsigned long) * CHAR_BIT)] &= 1L << (index % (sizeof(unsigned long) * CHAR_BIT))) != 0;
+		if ((index + 1) > bitset_size(jmeno_pole))
+		{
+			error_exit("bitset_getbit: Index %lu mimo rozsah 0..%lu",(unsigned long)index, (unsigned long)bitset_size(jmeno_pole) - 1);
+			return 1;
+		}
+		else
+		{
+        	return (jmeno_pole[1 + index / (sizeof(unsigned long) * CHAR_BIT)] &= 1L << (index % (sizeof(unsigned long) * CHAR_BIT))) != 0;
+		}
     }
 
 
