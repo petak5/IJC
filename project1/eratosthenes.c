@@ -1,4 +1,3 @@
-#include <math.h>
 #include "eratosthenes.h"
 
 void Eratosthenes(bitset_t pole)
