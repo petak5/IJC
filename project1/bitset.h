@@ -46,12 +46,12 @@ typedef unsigned long bitset_index_t;
 #define bitset_setbit(jmeno_pole,index,vyraz)\
 	(((index + 1) > bitset_size(jmeno_pole))\
 		? (error_exit("bitset_setbit: Index %lu mimo rozsah 0..%lu",(unsigned long)index, (unsigned long)bitset_size(jmeno_pole) - 1), 0)\
-	    : _setbit(jmeno_pole, index, vyraz)
+	    : (_setbit(jmeno_pole, index, vyraz)))
 
 #define bitset_getbit(jmeno_pole,index)\
 	(((index + 1) > bitset_size(jmeno_pole))\
 		? (error_exit("bitset_getbit: Index %lu mimo rozsah 0..%lu",(unsigned long)index, (unsigned long)bitset_size(jmeno_pole) - 1), 0)\
-    	: (_getbit(jmeno_pole, index))
+    	: (_getbit(jmeno_pole, index)))
 
 
 #else // USE_INLINE
