@@ -13,16 +13,18 @@
 typedef unsigned long* bitset_t;
 typedef unsigned long bitset_index_t;
 
+#define SIZE (sizeof(unsigned long) * CHAR_BIT)
+
 #define _is_units(velikost)\
-    1 + velikost / (sizeof(unsigned long) * CHAR_BIT) + (velikost % (sizeof(unsigned long) * CHAR_BIT) == 0 ? 0 : 1)
+    1 + velikost / SIZE + (velikost % SIZE == 0 ? 0 : 1)
 
 #define _setbit(jmeno_pole, index, vyraz)\
 	((vyraz)\
-    	? (jmeno_pole[1 + index / (sizeof(unsigned long) * CHAR_BIT)] |= 1L << (index % (sizeof(unsigned long) * CHAR_BIT)))\
-    	: (jmeno_pole[1 + index / (sizeof(unsigned long) * CHAR_BIT)] &= ~(1L << (index % (sizeof(unsigned long) * CHAR_BIT)))))
+    	? (jmeno_pole[1 + index / SIZE] |= 1L << (index % SIZE))\
+    	: (jmeno_pole[1 + index / SIZE] &= ~(1L << (index % SIZE))))
 
 #define _getbit(jmeno_pole, index)\
-	((jmeno_pole[1 + index / (sizeof(unsigned long) * CHAR_BIT)] & 1L << (index % (sizeof(unsigned long) * CHAR_BIT))) != 0)
+	((jmeno_pole[1 + index / SIZE] & 1L << (index % SIZE)) != 0)
 
 
 
@@ -31,8 +33,11 @@ typedef unsigned long bitset_index_t;
     static_assert(velikost > 0, "Velikost pole musi byt vacsia nez 0")
 
 #define bitset_alloc(jmeno_pole,velikost)\
-		bitset_t jmeno_pole = (bitset_t) malloc(_is_units(velikost) * sizeof(unsigned long));\
-		jmeno_pole[0] = velikost
+	bitset_t jmeno_pole = (bitset_t) malloc(_is_units(velikost) * sizeof(unsigned long));\
+	do {\
+		assert((jmeno_pole != NULL) && "bitset_alloc: Chyba alokace paměti");\
+		jmeno_pole[0] = velikost;\
+	} while (0)
 
 #define bitset_free(jmeno_pole)\
 	free(jmeno_pole)

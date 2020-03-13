@@ -7,13 +7,13 @@ int main(void)
 {
 	clock_t start = clock();
 
-	bitset_create(x, 500000000);
+	bitset_alloc(x, 500000001);
         
     Eratosthenes(x);
 
     int counter = 0;
 	unsigned long results[10];
-    for (unsigned long i = 499999999; i > 1; i--)
+    for (unsigned long i = 500000000; i > 1; i--)
     {
         if (bitset_getbit(x, i) == 0)
         {
