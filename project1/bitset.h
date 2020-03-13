@@ -16,7 +16,7 @@ typedef unsigned long bitset_index_t;
 #define SIZE (sizeof(unsigned long) * CHAR_BIT)
 
 #define _is_units(velikost)\
-    1 + velikost / SIZE + (velikost % SIZE == 0 ? 0 : 1)
+    (1 + velikost / SIZE + (velikost % SIZE == 0 ? 0 : 1))
 
 #define _setbit(jmeno_pole, index, vyraz)\
 	((vyraz)\
@@ -37,6 +37,10 @@ typedef unsigned long bitset_index_t;
 	do {\
 		assert((jmeno_pole != NULL) && "bitset_alloc: Chyba alokace paměti");\
 		jmeno_pole[0] = velikost;\
+		for (unsigned i = 1; i < _is_units(velikost); i++)\
+		{\
+			jmeno_pole[i] = 0;\
+		}\
 	} while (0)
 
 #define bitset_free(jmeno_pole)\
