@@ -7,7 +7,7 @@ int main(void)
 {
 	clock_t start = clock();
 
-	bitset_alloc(x, 500000001);
+	bitset_create(x, 500000001);
 
     Eratosthenes(x);
 
