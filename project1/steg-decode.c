@@ -10,14 +10,14 @@ int main(int argc, char *argv[])
 {
 	if (argc != 2)
 	{
-		error_exit("Invalid arguments. Expecting 2 arguments but were given: %d\n", argc);
+		error_exit("Neplatny pocet argumentov. Ocakavam 1, ale dostal som '%d'.\n", argc - 1);
 	}
 
 	struct ppm *image = ppm_read(argv[1]);
 
 	if (image == NULL)
 	{
-		error_exit("Failed to open image.\n");
+		error_exit("Nacitanie obrazku zlyhalo.\n");
 	}
 
 	unsigned size = image->xsize * image->ysize * 3;
@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
 	}
 
 	unsigned counter = 0;
-	for (unsigned i = 23; i < (size); i++)
+	for (unsigned i = 23; i < size; i++)
 	{
 		if (bitset_getbit(bs, i) == 0)
 		{
@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
 
 	if (message[counter / CHAR_BIT - 1] != 0)
 	{
-		error_exit("Message has no ending \\0 char.\n");
+		error_exit("Sprava v subore neobsahuje koncovy znak (\\0).\n");
 	}
 
 	printf("%s\n", message);
