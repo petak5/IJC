@@ -9,7 +9,7 @@ struct ppm * ppm_read(const char * filename)
 	FILE *f = fopen(filename, "r");
 	if (f == NULL)
 	{
-		warning_msg("Failed to open file %s\n", filename);
+		warning_msg("Zlyhalo otvorenie suboru '%s'.\n", filename);
 		return NULL;
 	}
 
@@ -17,21 +17,21 @@ struct ppm * ppm_read(const char * filename)
 	if ((fscanf(f, "P6 %u %u 255 ", &x, &y)) != 2)
 	{
 		fclose(f);
-		warning_msg("Invalid header format.\n");
+		warning_msg("Neplatny format hlavicky suboru '%s'.\n", filename);
 		return NULL;
 	}
 
-	if ((x == 0) || (y == 0))
+	if ((x <= 0) || (y <= 0))
 	{
 		fclose(f);
-		warning_msg("Invalid dimensions. Can not be 0.\n");
+		warning_msg("Neplatne rozmery, musia byt vacsie nez 0.\n");
 		return NULL;
 	}
 
 	if ((x * y) > MAX_LIMIT)
 	{
 		fclose(f);
-		warning_msg("Image dimensions of '%dx%d' are out of the limit of %d.\n", x, y, MAX_LIMIT);
+		warning_msg("Rozmery obrazku '%dx%d' su vacsie nez limit s hodnotou %d.\n", x, y, MAX_LIMIT);
 		return NULL;
 	}
 
@@ -40,7 +40,7 @@ struct ppm * ppm_read(const char * filename)
 	if (image == NULL)
 	{
 		fclose(f);
-		warning_msg("Failed to allocate memory for the image.\n");
+		warning_msg("Alokacia pamate zlyhala.\n");
 		return NULL;
 	}
 
@@ -55,7 +55,7 @@ struct ppm * ppm_read(const char * filename)
 		{
 			ppm_free(image);
 			fclose(f);
-			warning_msg("The file contains more data than declared in the header.\n");
+			warning_msg("Subor obsahuje viacej dat nez je deklarovanych v hlavicke.\n");
 			return NULL;
 		}
 
@@ -68,7 +68,7 @@ struct ppm * ppm_read(const char * filename)
 	{
 		ppm_free(image);
 		fclose(f);
-		warning_msg("File too small. EOF ocured before '%d' bytes were read.\n", x * y * 3);
+		warning_msg("Subor obsahuje menej dat nez je deklarovanych v hlavicke.\n");
 		return NULL;
 	}
 

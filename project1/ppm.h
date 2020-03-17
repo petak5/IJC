@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include "error.h"
 
-#define MAX_LIMIT (8000 * 8000 * 3)
+#define MAX_LIMIT (8000 * 8000)
 
 struct ppm {
 	unsigned xsize;
