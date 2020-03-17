@@ -1,3 +1,7 @@
+// ppm.c
+// Řešení IJC-DU1, příklad b), 17.3.2020
+// Autor: Peter Urgoš - xurgos00, FIT VUT v Brne
+
 #include "ppm.h"
 
 struct ppm * ppm_read(const char * filename)

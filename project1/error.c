@@ -1,3 +1,7 @@
+// error.c
+// Řešení IJC-DU1, příklad b), 17.3.2020
+// Autor: Peter Urgoš - xurgos00, FIT VUT v Brne
+
 #include "error.h"
 
 void warning_msg(const char *fmt, ...)

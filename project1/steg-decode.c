@@ -1,3 +1,7 @@
+// steg-decode.c
+// Řešení IJC-DU1, příklad b), 17.3.2020
+// Autor: Peter Urgoš - xurgos00, FIT VUT v Brne
+
 #include "ppm.h"
 #include "bitset.h"
 #include "eratosthenes.h"
