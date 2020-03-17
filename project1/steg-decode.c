@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
 
 	if (message[counter / CHAR_BIT - 1] != 0)
 	{
-		error_exit("Sprava v subore neobsahuje koncovy znak (\\0).\n");
+		error_exit("Sprava v subore neobsahuje koncovy znak '\\0'.\n");
 	}
 
 	printf("%s\n", message);
