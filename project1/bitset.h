@@ -61,13 +61,13 @@ typedef unsigned long bitset_index_t;
 
 // makro - nastavi bit v `jmeno_pole` na indexe `index` na 0 alebo 1 podla vysledku `vyraz`u
 #define bitset_setbit(jmeno_pole,index,vyraz)\
-	(((index >= bitset_size(jmeno_pole) || (index < 0)))\
+	((index >= bitset_size(jmeno_pole)))\
 		? (error_exit("bitset_setbit: Index %lu mimo rozsah 0..%lu",(unsigned long)index, (unsigned long)bitset_size(jmeno_pole) - 1), 0)\
 	    : (_setbit(jmeno_pole, index, vyraz)))
 
 // makro pre vypocet hodnoty bitu v `jmeno_pole` na indexe `index`
 #define bitset_getbit(jmeno_pole,index)\
-	(((index >= bitset_size(jmeno_pole) || (index < 0)))\
+	((index >= bitset_size(jmeno_pole)))\
 		? (error_exit("bitset_getbit: Index %lu mimo rozsah 0..%lu",(unsigned long)index, (unsigned long)bitset_size(jmeno_pole) - 1), 0)\
     	: (_getbit(jmeno_pole, index)))
 
@@ -84,7 +84,7 @@ typedef unsigned long bitset_index_t;
 	// inline funkcia - nastavi bit v `jmeno_pole` na indexe `index` na 0 alebo 1 podla vysledku `vyraz`u
     extern inline void bitset_setbit(bitset_t jmeno_pole, bitset_index_t index, int vyraz)
     {
-		if ((index >= bitset_size(jmeno_pole)) || (index < 0))
+		if (index >= bitset_size(jmeno_pole))
 		{
 			error_exit("bitset_setbit: Index %lu mimo rozsah 0..%lu",(unsigned long)index, (unsigned long)bitset_size(jmeno_pole) - 1);
 		}
@@ -97,7 +97,7 @@ typedef unsigned long bitset_index_t;
 	// inline funkcia vrati hodnotu bitu v `jmeno_pole` na indexe `index`
     extern inline int bitset_getbit(bitset_t jmeno_pole, bitset_index_t index)
     {
-		if ((index >= bitset_size(jmeno_pole)) || (index < 0))
+		if (index >= bitset_size(jmeno_pole)))
 		{
 			error_exit("bitset_getbit: Index %lu mimo rozsah 0..%lu",(unsigned long)index, (unsigned long)bitset_size(jmeno_pole) - 1);
 			return 1;
