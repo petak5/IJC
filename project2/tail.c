@@ -11,6 +11,7 @@ int main(int argc, char *argv[])
     long lines_count = 10;
     char *path = NULL;
     FILE *f = NULL;
+    int isFirstWarning = 1;
 
     // Process arguments
     if (argc == 1)
@@ -67,14 +68,91 @@ int main(int argc, char *argv[])
     }
 
     // Create array for the tail lines
-    char *lines = (char *)malloc(lines_count * sizeof(char) * (LINE_LENGTH + 1));
+    char **lines = (char **)malloc(lines_count * sizeof(char *));
     if (lines == NULL)
     {
         fprintf(stderr, "Error: failed to allocate memory.\n");
         return 1;
     }
+    for (int i = 0; i < lines_count; i++)
+    {
+        lines[i] = (char *)malloc((LINE_LENGTH + 1) * sizeof(char));
+        if (lines[i] == NULL)
+        {
+            fprintf(stderr, "Error: failed to allocate memory.\n");
+            return 1;
+        }
+    }
 
+    // Read from file
+    int row = 0;
+    int col = 0;
+    int rows_read = 0;
+    int cols_read = 0;
+    int c;
+    while ((c = getc(f)) != EOF)
+    {
+        if (c != '\n')
+        {
+            if (cols_read >= (LINE_LENGTH - 1))
+            {
+                if (isFirstWarning)
+                {
+                    fprintf(stderr, "Error: line length exceeded limit of %d characters. Ignoring the remaining characters.\n", LINE_LENGTH);
+                    isFirstWarning = 0;
+                }
 
+                lines[row][col] = 0;
+
+                col--;
+            }
+            else
+            {
+                lines[row][col] = c;
+            }
+
+            col++;
+            cols_read++;
+        }
+        else
+        {
+            lines[row][col] = 0;
+            row++;
+            rows_read++;
+            col = 0;
+            cols_read = 0;
+
+            if (rows_read >= lines_count)
+            {
+                if (rows_read == lines_count)
+                {
+                    row--;
+                    continue;
+                }
+                char *tmp = lines[0];
+                for (int x = 0; x < (lines_count - 1); x++)
+                {
+                    lines[x] = lines[x + 1];
+                }
+                tmp[0] = 0;
+                lines[lines_count - 1] = tmp;
+
+                row--;// = lines_count - 1;
+            }
+        }
+    }
+    lines[row][col] = 0;
+
+    for (int i = 0; i < ((rows_read < lines_count) ? rows_read : lines_count); i++)
+    {
+        printf("Line: %s|end\n", lines[i]);
+    }
+
+    // Free allocated memory
+    for (int i = 0; i < lines_count; i++)
+    {
+        free(lines[i]);
+    }
     free(lines);
 
     fclose(f);
