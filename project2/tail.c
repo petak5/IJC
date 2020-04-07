@@ -137,7 +137,7 @@ int main(int argc, char *argv[])
                 tmp[0] = 0;
                 lines[lines_count - 1] = tmp;
 
-                row--;// = lines_count - 1;
+                row--;
             }
         }
     }
@@ -145,7 +145,7 @@ int main(int argc, char *argv[])
 
     for (int i = 0; i < ((rows_read < lines_count) ? rows_read : lines_count); i++)
     {
-        printf("Line: %s|end\n", lines[i]);
+        printf("%s\n", lines[i]);
     }
 
     // Free allocated memory
