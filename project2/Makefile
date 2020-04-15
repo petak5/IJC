@@ -1,4 +1,4 @@
-CC=gcc-9
+CC=gcc
 CFLAGS=-std=c99 -pedantic -Wall -Wextra -O2
 
 MODULES=htab_hash_fun.o
