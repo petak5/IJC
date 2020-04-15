@@ -1,13 +1,21 @@
-#ifndef HTAB_INTERNAL
-#define HTAB_INTERNAL
+#ifndef __HTAB_INTERNAL__
+#define __HTAB_INTERNAL__
 
-#include <stdlib.h>
+#include <stdlib.h>     // uint32_t
 
 #include "htab.h"
 
-struct htab {
+#define BUCKETS 1023
+
+struct htab
+{
     struct htab_item **items;
     //...
 };
 
-#endif
+struct htab_item
+{
+    //...
+};
+
+#endif // __HTAB_INTERNAL__

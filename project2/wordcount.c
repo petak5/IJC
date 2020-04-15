@@ -2,5 +2,5 @@
 
 int main()
 {
-    return 0;
+    return htab_hash_fun("Hello, World!");
 }
