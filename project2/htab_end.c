@@ -6,7 +6,7 @@ htab_iterator_t htab_end(const htab_t * t)
 
     iterator.ptr = NULL;
     iterator.t = t;
-    iterator.idx = htab_bucket_count;
+    iterator.idx = htab_bucket_count(t);
 
     return iterator;
 }
