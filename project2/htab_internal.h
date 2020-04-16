@@ -9,13 +9,16 @@
 
 struct htab
 {
-    struct htab_item **items;
-    //...
+    size_t size;
+    size_t arr_size;
+    struct htab_item *items[];
 };
 
 struct htab_item
 {
-    //...
+    htab_key_t key;
+    htab_value_t value;
+    struct htab_item *next;
 };
 
 #endif // __HTAB_INTERNAL__
