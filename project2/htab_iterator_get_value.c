@@ -2,5 +2,5 @@
 
 htab_value_t htab_iterator_get_value(htab_iterator_t it)
 {
-    exit(1);
+    return it.ptr->value;
 }

@@ -2,5 +2,11 @@
 
 htab_iterator_t htab_end(const htab_t * t)
 {
-    exit(1);
+    htab_iterator_t iterator;
+
+    iterator.ptr = NULL;
+    iterator.t = t;
+    iterator.idx = htab_bucket_count;
+
+    return iterator;
 }

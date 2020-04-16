@@ -2,5 +2,7 @@
 
 htab_value_t htab_iterator_set_value(htab_iterator_t it, htab_value_t val)
 {
-    exit(1);
+    it.ptr->value = val;
+
+    return it.ptr->value;
 }
