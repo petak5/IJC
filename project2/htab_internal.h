@@ -5,8 +5,6 @@
 
 #include "htab.h"
 
-#define BUCKETS 1023
-
 struct htab
 {
     size_t size;
