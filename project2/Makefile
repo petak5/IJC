@@ -80,7 +80,7 @@ htab_size.o: htab_size.c htab_internal.h htab.h
 	$(CC) $(CFLAGS) -c -fPIC htab_size.c -o $@
 
 clean:
-	rm -f *.o *.a *.so
+	rm -f *.o *.a *.so tail wordcount wordcount-dynamic
 
 zip:
 	zip xurgos00.zip *.c *.cc *.h Makefile
