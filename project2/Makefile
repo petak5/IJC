@@ -5,7 +5,7 @@ LD_LIBRARY_PATH='.'
 
 MODULES=htab_begin.o htab_bucket_count.o htab_clear.o htab_end.o htab_erase.o htab_find.o htab_free.o htab_hash_fun.o htab_init.o htab_iterator_get_key.o htab_iterator_get_value.o htab_iterator_next.o htab_iterator_set_value.o htab_lookup_add.o htab_size.o
 
-.PHONY: clean zip
+.PHONY: all clean zip
 
 all: tail wordcount wordcount-dynamic
 
@@ -17,14 +17,17 @@ tail.o: tail.c
 	$(CC) $(CFLAGS) -c tail.c -o tail.o
 
 # part 2
-wordcount: wordcount.o libhtab.a
+wordcount: wordcount.o io.o libhtab.a
 	$(CC) $(CFLAGS) $^ -o $@
 
-wordcount-dynamic: wordcount.o libhtab.so
+wordcount-dynamic: wordcount.o io.o libhtab.so
 	$(CC) $(CFLAGS) $^ -o $@
 
 wordcount.o: wordcount.c htab.h
 	$(CC) $(CFLAGS) -c -fPIC wordcount.c -o $@
+
+io.o: io.c io.h
+	$(CC) $(CFLAGS) -c -fPIC io.c -o $@
 
 # libraries
 libhtab.a: $(MODULES)
