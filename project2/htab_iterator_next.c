@@ -13,16 +13,16 @@ htab_iterator_t htab_iterator_next(htab_iterator_t it)
         return it;
     }
 
-    while (it.ptr->next == NULL)
+    for (size_t i = it.idx + 1; i < htab_bucket_count(it.t); i++)
     {
-        it.idx++;
-        it.ptr = it.t->items[it.idx];
-
-        if (it.idx == htab_bucket_count(it.t))
+        if (it.t->items[i] != NULL)
         {
-            return htab_end(it.t);
+            it.ptr = it.t->items[i];
+            it.idx = i;
+
+            return it;
         }
     }
 
-    return it;
+    return htab_end(it.t);
 }
