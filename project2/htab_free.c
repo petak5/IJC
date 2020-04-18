@@ -2,5 +2,6 @@
 
 void htab_free(htab_t * t)
 {
-    exit(1);
+    htab_clear(t);
+    free(t);
 }
