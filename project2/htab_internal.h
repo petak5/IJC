@@ -1,7 +1,8 @@
 #ifndef __HTAB_INTERNAL__
 #define __HTAB_INTERNAL__
 
-#include <stdlib.h>     // uint32_t
+#include <stdlib.h>     // malloc and free
+#include <stdint.h>     // uint32_t
 
 #include "htab.h"
 
