@@ -12,7 +12,7 @@ htab_iterator_t htab_lookup_add(htab_t * t, htab_key_t key)
     struct htab_item *item = (struct htab_item *)malloc(sizeof(struct htab_item));
 
     size_t key_length = strlen(key);
-    htab_key_t copy = (htab_key_t)malloc(key_length + 1);
+    char *copy = (char *)malloc(key_length + 1);
     if (copy == NULL)
     {
         return htab_end(t);
