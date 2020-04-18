@@ -2,20 +2,23 @@
 
 htab_iterator_t htab_begin(const htab_t * t)
 {
-    htab_iterator_t iterator;
-    iterator.ptr = t->items[0];
-    iterator.t = t;
-    iterator.idx = 0;
-
-    while (!htab_iterator_valid(iterator))
+    if (htab_size(t) == 0)
     {
-        iterator = htab_iterator_next(iterator);
+        return htab_end(t);
+    }
 
-        if (htab_iterator_equal(iterator, htab_end(t)))
+    for (size_t i = 0; i < htab_bucket_count(t); i++)
+    {
+        if (t->items[i] != NULL)
         {
-            break;
+            htab_iterator_t iterator;
+            iterator.ptr = t->items[i];
+            iterator.t = t;
+            iterator.idx = i;
+
+            return iterator;
         }
     }
 
-    return iterator;
+    return htab_end(t);
 }
