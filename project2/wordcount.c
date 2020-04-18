@@ -27,5 +27,7 @@ int main()
         printf("%s\t%d\n", htab_iterator_get_key(iterator), htab_iterator_get_value(iterator));
     }
 
+    htab_free(htab);
+
     return 0;
 }
