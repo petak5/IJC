@@ -88,6 +88,7 @@ int main(int argc, char *argv[])
             int c = fgetc(f);
             if (c == EOF)
             {
+                fclose(f);
                 return 0;
             }
             if (c == '\n')
@@ -103,6 +104,8 @@ int main(int argc, char *argv[])
         }
 
         putchar('\n');
+
+        fclose(f);
 
         return 0;
     }
