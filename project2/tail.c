@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
     char *path = NULL;
     FILE *f = NULL;
     int isFirstWarning = 1;
+    int changeMode = 0;     // when number is with `+`
 
     // Process arguments
     if (argc == 1)
@@ -55,6 +56,11 @@ int main(int argc, char *argv[])
             fprintf(stderr, "Error: size has to be greater than 0.\n");
             return 1;
         }
+
+        if (argv[2][0] == '+')
+        {
+            changeMode = 1;
+        }
     }
     else
     {
@@ -70,6 +76,35 @@ int main(int argc, char *argv[])
             fprintf(stderr, "Error: failed to open file '%s'.\n", path);
             return 1;
         }
+    }
+
+    // change mode - if number was specified with `+`
+    // this mode does not have line length limit
+    if (changeMode)
+    {
+        // get rid of first `lines_count - 1`
+        for (int count = 0; count < lines_count - 1; )
+        {
+            int c = fgetc(f);
+            if (c == EOF)
+            {
+                return 0;
+            }
+            if (c == '\n')
+            {
+                count++;
+            }
+        }
+
+        int c;
+        while ((c = fgetc(f)) != EOF)
+        {
+            putchar(c);
+        }
+
+        putchar('\n');
+
+        return 0;
     }
 
     // Create array for the tail lines
