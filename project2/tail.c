@@ -1,3 +1,8 @@
+// tail.c
+// Brief: IJC-DU2, part 1)
+// Date: 19.4.2020
+// Author: Peter Urgoš - xurgos00, FIT VUT Brno
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

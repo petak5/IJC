@@ -1,3 +1,8 @@
+# Makefile
+# Brief: IJC-DU2
+# Date: 19.4.2020
+# Author: Peter Urgoš - xurgos00, FIT VUT Brno
+
 CC=gcc
 CFLAGS=-std=c99 -pedantic -Wall -Wextra -O2 -fPIC
 
