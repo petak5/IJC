@@ -3,7 +3,9 @@
 #include "htab.h"
 #include "io.h"
 
-#define BUCKETS 1023
+// The optimal load factor is about 70-75%
+// /usr/share/dict/words on my system contains 235886 words
+#define BUCKETS 300000
 #define WORD_LENGTH 127
 
 int main()
